@@ -1,0 +1,37 @@
+{
+  "name": "order_processing_workflow",
+  "description": "Order processing workflow",
+  "version": 1,
+  "tasks": [
+    {
+      "name": "reserve_inventory",
+      "taskReferenceName": "reserveInv",
+      "type": "SIMPLE",
+      "inputParameters": { "orderId": "${workflow.input.orderId}" }
+    },
+    {
+      "name": "process_payment",
+      "taskReferenceName": "processPay",
+      "type": "SIMPLE",
+      "inputParameters": {
+        "orderId": "${workflow.input.orderId}",
+        "amount": "${workflow.input.amount}"
+      }
+    },
+    {
+      "name": "ship_order",
+      "taskReferenceName": "shipOrder",
+      "type": "SIMPLE",
+      "inputParameters": { "orderId": "${workflow.input.orderId}" }
+    },
+    {
+      "name": "send_notification",
+      "taskReferenceName": "notify",
+      "type": "SIMPLE",
+      "inputParameters": { "orderId": "${workflow.input.orderId}" }
+    }
+  ],
+  "inputParameters": ["orderId","amount"],
+  "schemaVersion": 2,
+  "restartable": true
+}
